@@ -1,0 +1,65 @@
+<% layout('layouts/boilerplate') -%>
+<div class="container my-5 pt-5 flex-grow-1" style="max-width: 450px;">
+  <%- include('../partials/flash') %>
+
+  <form action="/campgrounds" method="POST" enctype="multipart/form-data" class="needs-validation card" novalidate>
+    <div class="card-header">
+      <h4 class="card-title text-center mt-2">Add New Campground:</h4>
+    </div>
+    <div class="card-body">
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Choose Title:</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please enter a title.
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Enter Location:</label>
+        <input type="text" class="form-control" id="location" name="location" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please enter a location.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="image">Upload Image:</label>
+        <input type="file" class="form-control" id="image" name="image">
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Price:</label>
+        <input type="number" class="form-control" id="price" name="price" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Choose a price.
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea class="form-control" id="description" name="description" required></textarea>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please write a description.
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-outline-primary w-100">Submit</button>
+    </div>
+  </form>
+</div>

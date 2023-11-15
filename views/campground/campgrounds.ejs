@@ -1,0 +1,70 @@
+<% layout('layouts/boilerplate') -%>
+<%- include('../partials/clusterMap') %>
+<%- include('../partials/searchSelect') %>
+
+<div class="container flex-grow-1" style="max-width: 900px;">
+  <%- include('../partials/flash') %>
+
+  <% for(let campground of campgrounds) { %>
+  <div class="card mb-3 my-3 container">
+    <div class="row g-0">
+      <a class="col-md-5 image-container h-20r" href="/campgrounds/<%=campground._id%>">
+        <div class="campground-image" style="background-image: url(<%=campground.image.url%>);"></div>
+      </a>
+
+      <div class="col-md-7  d-flex flex-column">
+        <div class="card-body flex-grow-1">
+          <div class="d-flex justify-content-between">
+            <a href="/campgrounds/<%= campground._id %>" class="text-dark link-primary link-underline link-underline-opacity-0">
+              <h5 class="card-title"><%- campground.title %></h5>
+            </a>
+            <a href="/user/<%= campground.author._id %>">by <%= campground.author.username %></a>
+          </div>
+
+          <p class="text-muted"><%= campground.location.name %></p>
+
+          <div class="d-flex">
+            <div class="starability-wrap">
+              <p class="starability-result " data-rating="<%= Math.round(campground.rating) %>">
+                Rated: 3 stars
+              </p>
+            </div>
+            <p><strong><%= campground.rating.toFixed(1) %> </strong>
+            <p class="text-muted">&nbsp;&nbsp;(<%= campground.reviews.length %> Reviews)</p>
+            </p>
+          </div>
+          <h5><%= campground.price %> $</h5>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><%- campground.description.slice(0,50) %>...</li>
+            <li class="list-group-item">
+              <div class="tag">Forest</div>
+              <div class="tag">Forest</div>
+              <div class="tag">Forest</div>
+              <div class="tag">Forest</div>
+
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %>
+
+
+
+  <div class="btn-toolbar container" role="toolbar">
+    <div class="btn-group mr-2" role="group">
+      <a type="button" class="btn btn-dark <% if (currentPage == 0) { %>disabled <% } %>" href="/campgrounds?page=<%= Number(currentPage)-1 %>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+        </svg></a>
+      <% for (let i = 0; i < countOfPages; i++) { %>
+      <a type="button" class="btn  btn-dark <% if (i == currentPage) { %>disabled <% } %>" href="/campgrounds?page=<%= i %>"><%= i+1 %></a>
+      <% } %>
+      <a type="button" class="btn btn-dark <% if (currentPage == countOfPages-1) { %>disabled <% } %>" href="/campgrounds?page=<%= Number(currentPage)+1 %>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+        </svg></a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+main {
+  background-color: rgb(243, 244, 247);
+}
+
+.margin-top {
+  padding-top: 120px;
+}
+
+nav a {
+  color: rgba(255, 255, 255, 0.801);
+  text-decoration: none;
+  padding-inline: 1rem;
+  font-weight: bolder;
+  font-size: 1.1rem;
+}
+/* nav a:hover {
+  border-bottom: 3px solid rgba(255, 255, 255, 0.699);
+} */
+nav a:after {
+  content: ""; /* So that it will show */
+  display: block; /* So it can have width */
+  max-width: 150px; /* Make sure position on these elements is relative (or something besides default) */
+  height: 1px;
+  border-bottom: 3px solid rgba(255, 255, 255, 0);
+  transition: all 0.2s;
+  margin: 0px auto; /* Center the line */
+}
+
+nav a:hover:after {
+  content: ""; /* So that it will show */
+  display: block; /* So it can have width */
+  max-width: 150px; /* Make sure position on these elements is relative (or something besides default) */
+  height: 1px;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.699);
+
+  margin: 0px auto; /* Center the line */
+}
+
+.white {
+  color: white;
+}
+
+nav {
+  text-align: center;
+}
+
+.navbar-toggler-icon {
+  color: white;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.h-20r {
+  height: 20rem;
+}
+
+.h-25r {
+  height: 25rem;
+}
+
+.campground-image {
+  width: 85%;
+  height: 85%;
+  border-radius: 0.5rem;
+  background-size: cover;
+  background-position: center;
+}
+
+.starability-wrap {
+  transform: scale(0.8);
+  margin-top: -0.5rem;
+  margin-left: -1rem;
+}
+
+.tag {
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-inline: 0.2rem;
+  display: inline-block;
+  border-radius: 0.3rem;
+  border: 1px solid silver;
+}
+
+.statistics {
+  border-left: 1px solid silver;
+}
+
+.top-5rem {
+  top: 5rem !important;
+}

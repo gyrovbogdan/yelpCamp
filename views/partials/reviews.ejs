@@ -1,0 +1,90 @@
+<% if(!isAuthor) { %>
+<div class="card mb-2">
+  <div class="card-body">
+    <h4 class="card-title">Add your review</h4>
+    <form action="/campgrounds/<%= campground._id %>/reviews" method="POST">
+      <fieldset class="starability-basic mt-3">
+        <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+        <input type="radio" id="first-rate1" name="rating" value="1" />
+        <label for="first-rate1" title="Terrible">1 star</label>
+        <input type="radio" id="first-rate2" name="rating" value="2" />
+        <label for="first-rate2" title="Not good">2 stars</label>
+        <input type="radio" id="first-rate3" name="rating" value="3" />
+        <label for="first-rate3" title="Average">3 stars</label>
+        <input type="radio" id="first-rate4" name="rating" value="4" />
+        <label for="first-rate4" title="Very good">4 stars</label>
+        <input type="radio" id="first-rate5" name="rating" value="5" />
+        <label for="first-rate5" title="Amazing">5 stars</label>
+      </fieldset>
+      <div class="form-floating">
+        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="text"></textarea>
+        <label for="floatingTextarea">Comment</label>
+      </div>
+      <button class="btn btn-outline-primary mt-3 w-100">Submit</button>
+    </form>
+  </div>
+</div>
+<% } %>
+
+<%if(reviews.length) { %>
+<div class="card container mb-2">
+  <div class="card-body">
+    <form class="d-flex justify-content-between" action="/campgrounds/<%= campground._id %>" method="get">
+      <strong class="fs-5 my-1 d-inline">Sort by: &nbsp;&nbsp;&nbsp; </strong>
+
+      <div class="w-50">
+        <select class="form-select" name="sort">
+          <option value="newest" <% if (query.sort == "newest") { %>selected<% } %>>Newest</option>
+          <option value="negative" <% if (query.sort == "negative") { %>selected<% } %>>Negative</option>
+          <option value="positive" <% if (query.sort == "positive") { %>selected<% } %>>Positive</option>
+        </select>
+      </div>&nbsp;&nbsp;
+      <button class="btn btn-outline-dark"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+        </svg></button>
+
+    </form>
+  </div>
+</div>
+<%   for(let review of reviews) { %>
+<div class="card mb-2">
+  <div class="card-body">
+    <h6 class="card-title"><% if (review.author) {%><a href="/user/<%= review.author._id %>">by <%= review.author.username %></a><% } else { %>Account Deleted <% } %></h6>
+    <div class="d-flex justify-content-between">
+      <p class="starability-result scale" data-rating="<%= review.rate %>"></p>
+      <% if (isAuthorised && review.author && review.author._id.equals(isAuthorised.id)) { %>
+      <a href="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>/edit">
+        <svg xmlns=" http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+        </svg>
+      </a>
+      <% } %>
+    </div>
+
+    <p class="card-text"><%= review.text %></p>
+  </div>
+</div>
+<% } %>
+
+<div class="btn-toolbar container" role="toolbar">
+  <div class="btn-group mr-2" role="group">
+    <a type="button" class="btn btn-dark <% if (currentPage == 0) { %>disabled <% } %>" href="/campgrounds/<%= campground._id %>?<% for (const i in query) { %><%=`${i}=${query[i]}&`%><% } %>page=<%= Number(currentPage)-1 %>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+      </svg></a>
+    <% for (let i = 0; i < countOfPages; i++) { %>
+    <a type="button" class="btn  btn-dark <% if (i == currentPage) { %>disabled <% } %>" href="/campgrounds/<%= campground._id %>?<% for (const i in query) { %><%=`${i}=${query[i]}&`%><% } %>page=<%= i %>"><%= i+1 %></a>
+    <% } %>
+    <a type="button" class="btn btn-dark <% if (currentPage == countOfPages-1) { %>disabled <% } %>" href="/campgrounds/<%= campground._id %>?<% for (const i in query) { %><%=`${i}=${query[i]}&`%><% } %>page=<%= Number(currentPage)+1 %>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+      </svg></a>
+  </div>
+</div>
+
+<% } else {%>
+<div class="card mb-3">
+  <div class="card-body">
+    <h4 class="card-title">No reviews now...<% if(!isAuthor) { %> Be first! <% } %> </h4>
+  </div>
+</div>
+<% } %>

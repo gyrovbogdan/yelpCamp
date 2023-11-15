@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate') -%>
+<div class="container my-5 pt-5 flex-grow-1" style="max-width: 450px;">
+  <%- include('../partials/flash') %>
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1563299796-17596ed6b017?auto=format&fit=crop&q=80&w=1170&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="card-img-top">
+
+    <div class="card-body">
+      <h4 class="card-title text-center">Login</h4>
+      <form action="/user/login" method="POST" class="needs-validation" novalidate>
+
+        <div class="">
+
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" name="username" id="username" required>
+
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Please enter a username.
+          </div>
+
+        </div>
+
+        <div class="">
+
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" name="password" id="password" class="form-control" required>
+
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Please enter a password.
+          </div>
+
+        </div>
+        <button class="btn btn-outline-primary mt-3 w-100">Submit</button>
+
+      </form>
+
+
+    </div>
+    <div class="card-footer text-body-secondary text-center">
+      <a href="/user/register">Don't have a account yet? Register</a>
+    </div>
+  </div>
+</div>

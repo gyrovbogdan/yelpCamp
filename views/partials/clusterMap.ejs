@@ -1,0 +1,63 @@
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=a44fa0a0-5b38-4b61-8013-9aa8df26d8bc" type="text/javascript"></script>
+
+<script>
+  ymaps.ready(function() {
+    var myMap = new ymaps.Map(
+        "map", {
+          center: [37.752513, -100.01958],
+          zoom: 4,
+          behaviors: ["default", "scrollZoom"],
+        }, {
+          searchControlProvider: "yandex#search",
+        }
+      ),
+      clusterer = new ymaps.Clusterer({
+        preset: "islands#invertedVioletClusterIcons",
+        groupByCoordinates: false,
+        clusterDisableClickZoom: true,
+        clusterHideIconOnBalloonOpen: false,
+        geoObjectHideIconOnBalloonOpen: false,
+      });
+
+
+
+    const campgrounds = <%- JSON.stringify(campgrounds) %>;
+
+
+    let geoObjects = [];
+
+
+    for (const campground of campgrounds) {
+      geoObjects.push(new ymaps.Placemark(
+        campground.location.pos, {
+          balloonContent: `<a href='/campgrounds/${campground._id}'>${campground.title}</a><br>${campground.location.name}`,
+          clusterCaption: campground.title,
+        }, {
+          preset: "islands#violetIcon",
+        }
+      ));
+    }
+
+    clusterer.options.set({
+      gridSize: 80,
+      clusterDisableClickZoom: true,
+    });
+
+    clusterer.add(geoObjects);
+    myMap.geoObjects.add(clusterer);
+
+
+    myMap.controls.remove('geolocationControl'); // удаляем геолокацию
+    myMap.controls.remove('searchControl'); // удаляем поиск
+    myMap.controls.remove('trafficControl'); // удаляем контроль трафика
+    myMap.controls.remove('typeSelector'); // удаляем тип
+    myMap.controls.remove('fullscreenControl'); // удаляем кнопку перехода в полноэкранный режим
+    myMap.controls.remove('zoomControl'); // удаляем контрол зуммирования
+    myMap.controls.remove('rulerControl'); // удаляем контрол правил
+
+  });
+</script>
+
+<div class="card mb-2">
+  <div id="map" style="height: 350px; margin-top: 2rem"></div>
+</div>

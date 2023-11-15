@@ -1,0 +1,76 @@
+<% layout('layouts/boilerplate') -%>
+<div class="container my-5 pt-5 flex-grow-1" style="max-width: 900px;">
+  <%- include('../partials/flash') %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-0 sticky-top top-5rem">
+
+        <div class="image-container h-25r" href="/campgrounds/<%=campground._id%>">
+          <div class="campground-image" style="background-image: url(<%=campground.image.url%>);"></div>
+        </div>
+
+
+        <div class="card-body flex-grow-1">
+          <div class="d-flex justify-content-between">
+            <a href="/campgrounds/<%= campground._id %>" class="text-dark link-primary link-underline link-underline-opacity-0">
+              <h5 class="card-title"><%- campground.title %></h5>
+            </a>
+            <a href="/user/<%= campground.author._id %>">by <%= campground.author.username %></a>
+          </div>
+
+          <p class="text-muted"><%= campground.location.name %></p>
+
+          <div class="d-flex">
+            <div class="starability-wrap">
+              <p class="starability-result " data-rating="<%= Math.round(campground.rating) %>">
+                Rated: 3 stars
+              </p>
+            </div>
+            <p><strong><%= campground.rating.toFixed(1) %> </strong>
+            <p class="text-muted">&nbsp;&nbsp;(<%= campground.reviews.length %> Reviews)</p>
+            </p>
+          </div>
+          <h5><%= campground.price %> $</h5>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><%- campground.description.slice(0,50) %>...</li>
+            <li class="list-group-item">
+              <div class="tag">Forest</div>
+              <div class="tag">Forest</div>
+              <div class="tag">Forest</div>
+              <div class="tag">Forest</div>
+
+            </li>
+
+            <% if(isAuthor) { %>
+            <div class="btn-group w-100 mt-3" role="group" aria-label="Basic example">
+              <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-outline-primary">Edit </a>
+              <a href="/campgrounds/<%= campground._id %>/hide" class="btn btn-outline-info">Hide </a>
+              <button id="deleteButton" class="btn btn-outline-danger">Delete</button>
+              <!-- <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST"><button class="btn btn-danger">Delete</butto>
+            </form> -->
+            </div>
+            <script>
+              const button = document.querySelector('#deleteButton');
+              button.addEventListener('click', function(e) {
+                fetch('http://localhost:3000/campgrounds/<%= campground._id %>', {
+                    method: 'DELETE'
+                  })
+                  .then(window.location.replace('http://localhost:3000/campgrounds'))
+
+              })
+            </script>
+            <% } %>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mt-3 mt-md-0">
+
+      <%- include('../partials/map.ejs') %>
+      <%- include('../partials/reviews.ejs')  %>
+    </div>
+
+  </div>
+</div>

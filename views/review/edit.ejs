@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate') -%>
+<div class="container my-5 pt-5 flex-grow-1" style="max-width: 450px;">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title"><a href="user/<%= review.author._id %>">by <%= review.author.username %></a></h4>
+      <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=PATCH" method="POST">
+        <fieldset class="starability-basic mt-3">
+          <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+          <input type="radio" id="first-rate1" name="rating" value="1" />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input type="radio" id="first-rate2" name="rating" value="2" />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input type="radio" id="first-rate3" name="rating" value="3" />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input type="radio" id="first-rate4" name="rating" value="4" />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input type="radio" id="first-rate5" name="rating" value="5" />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="text"><%= review.text %></textarea>
+          <label for="floatingTextarea">Comment</label>
+        </div>
+
+        <button class="btn btn-outline-primary mt-3 w-100">Change</button>
+      </form>
+      <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-outline-danger mt-2 w-100">Delete</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+</div>
+</div>

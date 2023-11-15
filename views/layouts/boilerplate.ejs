@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="/css/app.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/starability-basic.min.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <script src="/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+  <header><%- include('../partials/navbar') %></header>
+
+  <main class="d-flex flex-column min-vh-100 justify-content-between">
+
+    <div class="pt-4">
+
+      <%- body -%>
+    </div>
+
+    <div class="footer-container ">
+      <%- include('../partials/footer') %>
+    </div>
+
+  </main>
+
+  <script src="/js/formValidation.js"></script>
+</body>
+
+</html>
