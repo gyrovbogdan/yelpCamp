@@ -8,10 +8,11 @@ const { descriptors, places, cities } = require("./seedHelpers");
 const axios = require("axios");
 const getPos = require("../utils/getPos");
 
+const dbUrl = process.env.DB_URL;
+const unsplash_key = process.env.UNSPLASH_API_KEY;
+
 mongoose
-  .connect(
-    "mongodb+srv://gyrovbogdan:PMzOfxmuFBReg7nc@cluster0.ay5rb0i.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(dbUrl)
   .then(() => {
     console.log("   Connected to MongoDB");
   })
@@ -31,7 +32,7 @@ const plantSeeds = async () => {
 
     const image = await axios
       .get(
-        "https://api.unsplash.com/photos/random?client_id=ydshsdFiT9LZI_Jdt5pC-Gd74irWpvW-AofVjyNezz4&collection=3293100"
+        `https://api.unsplash.com/photos/random?client_id=${unsplash_key}&collection=3293100`
       )
       .then((res) => res.data.urls.regular);
 

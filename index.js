@@ -14,26 +14,25 @@ const methodOverride = require("method-override"),
   MongoStore = require("connect-mongo"),
   passport = require("passport"),
   mongoSanitize = require("express-mongo-sanitize"),
-  helmet = require("helmet");
+  helmet = require("helmet"),
+  mongoose = require("mongoose");
 
 const User = require("./models/user");
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-const { ErrorHandler } = require("./utils/middleware");
 
 const homeRouter = require("./routes/home"),
   campgroundRoutes = require("./routes/campground"),
   userRoutes = require("./routes/user"),
   reviewRoutes = require("./routes/review"),
-  notFoundRouter = require("./routes/notFoundRouter");
-
-const { localsMiddleware } = require("./utils/middleware");
-
-const mongoose = require("mongoose");
+  notFoundRouter = require("./routes/notFoundRouter"),
+  { localsMiddleware, ErrorHandler } = require("./utils/middleware");
 
 const dbUrl = process.env.DB_URL;
+const sessionSecret = process.env.SESSION_SECRET;
+
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 mongoose
   .connect(dbUrl)
   .then(() => {
@@ -107,11 +106,11 @@ app.use(
 
 const sessionConfig = {
   store: MongoStore.create({
-    mongoUrl: "mongodb://127.0.0.1:27017/yelpcamp",
+    mongoUrl: "dbUrl",
     touchAfter: 24 * 3600,
   }),
-  secret: "thisshouldbeabettersecret!",
-  resave: true,
+  secret: sessionSecret,
+  resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
