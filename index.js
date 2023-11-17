@@ -106,7 +106,7 @@ app.use(
 
 const sessionConfig = {
   store: MongoStore.create({
-    mongoUrl: "dbUrl",
+    mongoUrl: dbUrl,
     touchAfter: 24 * 3600,
   }),
   secret: sessionSecret,
