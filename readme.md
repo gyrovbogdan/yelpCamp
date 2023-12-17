@@ -1,3 +1,4 @@
 # YelpCamp Project
 
-Using: Node JS, EJS, MongoDB, Bootstrap
+Stack: Node JS, Express, EJS, MongoDB, Mongoose, Bootstrap, Cloudinary, YandexMaps
+
